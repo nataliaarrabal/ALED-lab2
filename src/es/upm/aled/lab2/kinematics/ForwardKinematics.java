@@ -56,28 +56,29 @@ public class ForwardKinematics {
 	private static Node computePositions(Segment link, double baseX, double baseY, double accumulatedAngle) {
 		// TODO: Implemente este método
 		
-
-		double xFinal= baseX+link.getLength()*Math.cos(link.getAngle()+accumulatedAngle);
-		double yFinal= baseY+link.getLength()*Math.sin(link.getAngle()+accumulatedAngle);
+		double angleTotal = link.getAngle()+accumulatedAngle;
+		double xFinal= baseX+link.getLength()*Math.cos(angleTotal);
+		double yFinal= baseY+link.getLength()*Math.sin(angleTotal);
 		
+		//nodo de la pos final del segmento actual
+		Node currentNode= new Node(xFinal,yFinal);
 		
 		//caso bse de si no hay hijos que devuelva el nodo de segmento dado
 		if(link.getChildren().size()==0) {
-			Node n=new Node(baseX,baseY);
-			return n;
+			//Node n=new Node(baseX,baseY);
+			return currentNode ;
 		}
 		// paso recursivo
 		
-		Node currentNode= new Node(xFinal,yFinal);
-		
 		for (Segment child:link.getChildren()) {
-			Node childNode= computePositions(child,xFinal,yFinal,link.getAngle()+accumulatedAngle);
-			currentNode.addChild(childNode);		}
+			Node childNode= computePositions(child,xFinal,yFinal,angleTotal); //creamos variable para guardadr los nodos hijos
+			currentNode.addChild(childNode);	 // añadir nodo hijo al nodo final del segmento actual	}
 		//Node nfinal= new Node (xFinal,yFinal);
 		//return nfinal;
 		
-		return currentNode;
 		
-	}
+		
+	}return currentNode;
 	
 }
+	}
