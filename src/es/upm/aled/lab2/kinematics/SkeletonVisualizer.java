@@ -30,6 +30,7 @@ public class SkeletonVisualizer {
 	 */
 	public static void main(String[] args) {
 		// Kinematic chain definition
+		
 		// Hip (root)
 		Segment hip = new Segment(0, Math.toRadians(0));
 		// Torso
