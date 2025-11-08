@@ -31,10 +31,10 @@ public class ForwardKinematics {
 	public static Node computePositions(Segment root, double originX, double originY) {
 		// TODO: Implemente este método
 	
-		Node n= new Node(originX,originY);
-		computePositions(root,originX,originY,0);
+		//Node n= new Node(originX,originY);
+		return computePositions(root,originX,originY,0);
 		
-		return n;
+		//return n;
 	}
 
 	
@@ -55,21 +55,29 @@ public class ForwardKinematics {
 	// Private helper method that implements the recursive algorithm
 	private static Node computePositions(Segment link, double baseX, double baseY, double accumulatedAngle) {
 		// TODO: Implemente este método
-		Node n=new Node(baseX,baseY);
-		//caso bse de si no hay hijos que devuelva el nodo de segmento dado
-		if(link.getChildren().size()==0) {
-			return n;
-		}
 		
+
 		double xFinal= baseX+link.getLength()*Math.cos(link.getAngle()+accumulatedAngle);
 		double yFinal= baseY+link.getLength()*Math.sin(link.getAngle()+accumulatedAngle);
 		
-		for (Segment child:link.getChildren()) {
-			computePositions(child,xFinal,yFinal,link.getAngle()+accumulatedAngle);
-			
+		
+		//caso bse de si no hay hijos que devuelva el nodo de segmento dado
+		if(link.getChildren().size()==0) {
+			Node n=new Node(baseX,baseY);
+			return n;
 		}
-		Node nfinal= new Node (xFinal,yFinal);
-		return nfinal;
+		// paso recursivo
+		
+		Node currentNode= new Node(xFinal,yFinal);
+		
+		for (Segment child:link.getChildren()) {
+			Node childNode= computePositions(child,xFinal,yFinal,link.getAngle()+accumulatedAngle);
+			currentNode.addChild(childNode);		}
+		//Node nfinal= new Node (xFinal,yFinal);
+		//return nfinal;
+		
+		return currentNode;
 		
 	}
+	
 }
